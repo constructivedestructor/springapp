@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>TechIndustry</title>
+    <script>
+
+    </script>
+</head>
+<body>
+    <h1 th:inline="text">Welcome, [[${#httpServletRequest.remoteUser}]]</h1>
+    <form th:action="@{/logout}" method="post" style="margin-bottom : 10px">
+        <input type="submit" value="Sign Out">
+    </form>
+    <table border="1" style="margin-bottom : 10px">
+        <tr>
+            <th>ID</th>
+            <th>Сумма</th>
+            <th>Дата поступления</th>
+            <th>Дата продажи</th>
+        </tr>
+        <tr th:each = "sale : ${sales}">
+            <th th:text = "${sale.id}"></th>
+            <th th:text = "${sale.sum}"></th>
+            <th th:text = "${sale.date_income}"></th>
+            <th th:text = "${sale.date_sale}"></th>
+        </tr>
+    </table>
+    <form th:action="@{/workspace}" th:object="${sale}" method="post">
+    <table border="1">
+        <tr>
+            <th>Сумма</th>
+            <th>Дата поступления</th>
+            <th>Дата продажи</th>
+            <th></th>
+        </tr>
+        <tr>
+            <th><input type="text" th:field="*{sum}" id="sum"></th>
+            <th><input type="datetime-local" th:field="*{date_income}" min="2000-01-01 00:00:00" max="2099-12-31 23:59:59" id="date_income"></th>
+            <th><input type="datetime-local" th:field="*{date_sale}" min="2000-01-01 00:00:00" max="2099-12-31 23:59:59" id="date_sale"></th>
+            <th><input type="submit" value="Save" onclick="refresh()"></th>
+        </tr>
+    </table>
+    </form>
+</body>
+</html>
